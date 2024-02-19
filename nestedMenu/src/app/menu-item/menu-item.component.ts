@@ -40,20 +40,25 @@ export class MenuItemComponent {
     {
       label: 'Menu 4',
       subItems: [
-        { label: 'Item 4.1', action: () => console.log('Clicked Item 4.1') },
+        { label: 'Subitem 4.1', action: () => console.log('Clicked Item 4.1') },
         {
           label: 'Item 4.2',
           subItems: [
             { label: 'Subitem 4.2.1', action: () => console.log('Clicked Subitem 4.2.1') },
-            { label: 'Subitem 4.2.2', action: () => console.log('Clicked Subitem 4.2.2') }
+            { 
+              label: 'Item 4.2.2',
+              subItems: [
+                { label: 'Subsubitem 4.2.2.1', action: () => console.log('Clicked Subsubitem 4.2.2.1') },
+                { label: 'Subsubitem 4.2.2.2', action: () => console.log('Clicked Subsubitem 4.2.2.2') }
+              ]
+            }
           ]
         }
       ]
     },
-    // Add more menus as needed
   ];
 
-  @Input() menuItem: any; // Assuming menuItem has a 'label' and 'subItems' property
+  @Input() menuItem: any; 
 
   handleItemClick(subItem: any): void {
     if (subItem && subItem.action && typeof subItem.action === 'function') {

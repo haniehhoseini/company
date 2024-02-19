@@ -9,7 +9,7 @@
           <ng-container *ngFor="let subsubmenu of subItem.subItems">
             <button mat-menu-item [matMenuTriggerFor]="threesubmenu">{{ subsubmenu.label }}</button>
             <mat-menu #threesubmenu="matMenu">
-              
+              <ng-container *ngFor="let subsubsubmenu of subsubmenu.subItems"></ng-container>
             </mat-menu>
           </ng-container>
         </mat-menu>
