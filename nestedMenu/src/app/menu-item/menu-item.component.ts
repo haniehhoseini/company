@@ -152,7 +152,8 @@ export class MenuItemComponent {
     
   }
 
-
+ // i is my row 
+ //index is my column
   Children(id: number , index: any , i: any){
     console.log(this.list);
     
