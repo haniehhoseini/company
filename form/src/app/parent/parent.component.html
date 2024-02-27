@@ -1,0 +1,19 @@
+<div class="d-flex align-items-start ">
+  <div class="card" style="width: 15rem; height: 20rem;">
+    
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Registeration</li>
+      <li class="list-group-item">Confirm Mobile</li>
+      <li class="list-group-item">Successed</li>
+    </ul>
+
+  </div>
+
+  <div class="card" style="width: 50rem; height: 20rem;">
+    <router-outlet></router-outlet>
+    <div class="d-flex justify-content-between">
+      <button type="button" class="btn btn-light btn-lg col-4 d-inline-block" *ngIf="buttonBack" (click)="backClick()" >Back</button>
+      <button type="button" class="btn btn-light btn-lg col-4 d-inline-block" (click)="continueClick()">Continue</button>
+    </div>
+  </div>
+</div>
