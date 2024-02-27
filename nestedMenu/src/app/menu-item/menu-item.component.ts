@@ -1,68 +1,200 @@
-import { Component , Input, OnInit, ViewChild} from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
-import { ElementRef } from '@angular/core';
+import { Component , Input } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule , MatMenuTrigger} from '@angular/material/menu';
-import { MatButtonModule } from '@angular/material/button';
+
+
 
 
 @Component({
   selector: 'app-menu-item',
   standalone: true,
-  imports: [RouterModule , CommonModule , MatIconModule , MatMenuModule , MatMenuTrigger , MatButtonModule],
+  imports: [ RouterModule , CommonModule ],
   templateUrl: './menu-item.component.html',
   styleUrl: './menu-item.component.scss'
 })
 export class MenuItemComponent {
+
   menuItems = [
     {
-      label: 'Menu 1',
-      subItems: [
-        { label: 'Item 1.1', action: () => console.log('Clicked Item 1.1') },
-        { label: 'Item 1.2', action: () => console.log('Clicked Item 1.2') }
-      ]
-    },
-    {
-      label: 'Menu 2',
-      subItems: [
-        { label: 'Item 2.1', action: () => console.log('Clicked Item 2.1') },
-        { label: 'Item 2.2', action: () => console.log('Clicked Item 2.2') }
-      ]
-    },
-    {
-      label: 'Menu 3',
-      subItems: [
-        { label: 'Item 3.1', action: () => console.log('Clicked Item 3.1') },
-        { label: 'Item 3.2', action: () => console.log('Clicked Item 3.2') }
-      ]
-    },
-    {
-      label: 'Menu 4',
-      subItems: [
-        { label: 'Subitem 4.1', action: () => console.log('Clicked Item 4.1') },
+      id: 1,
+      name: 'item1',
+      parentID: null,
+      children:[
         {
-          label: 'Item 4.2',
-          subItems: [
-            { label: 'Subitem 4.2.1', action: () => console.log('Clicked Subitem 4.2.1') },
-            { 
-              label: 'Item 4.2.2',
-              subItems: [
-                { label: 'Subsubitem 4.2.2.1', action: () => console.log('Clicked Subsubitem 4.2.2.1') },
-                { label: 'Subsubitem 4.2.2.2', action: () => console.log('Clicked Subsubitem 4.2.2.2') }
+        id: 6,
+        name: 'item1.1',
+        parentID: 1,
+        children:[
+          {
+            id: 16,
+            name: 'item1.1.1',
+            parentID: 6,
+            children:[]
+          }
+        ]
+      }
+    ]
+    },
+    {
+      id: 2,
+      name: 'item2',
+      parentID: null,
+      children:[]
+    },
+    {
+      id: 3,
+      name: 'item3',
+      parentID: null,
+      children:[
+        {
+          id: 7,
+          name:'item3.1',
+          parentID: 3,
+          children:[
+            {
+              id: 9,
+              name: 'items3.1.1',
+              parentID: 7,
+              children:[
+                {
+                  id: 10,
+                  name: 'item3.1.1.1',
+                  parentID: 9,
+                  children:[]
+                },
+                {
+                  id: 11,
+                  name: 'item3.1.1.2',
+                  parentID: 9,
+                  children:[
+                    {
+                      id: 12,
+                      name: 'item3.1.1.2.1',
+                      parentID: 11,
+                      children:[]
+                    },
+                    {
+                      id: 13,
+                      name: 'item3.1.1.2.2',
+                      parentID: 11,
+                      children:[
+                        {
+                          id: 14,
+                          name: 'item3.1.1.2.2.1',
+                          parentID:13 ,
+                          children:[]
+                        },
+                        {
+                          id: 15,
+                          name: 'item3.1.1.2.2.2',
+                          parentID: 13,
+                          children:[]
+                        }
+                      ]
+                    }
+                  ]
+                }
               ]
+            }
+          ]
+
+        },
+        {
+          id: 8,
+          name:'item3.2',
+          parentID: 3,
+          children:[
+            {
+              id: 17,
+              name: 'item3.2.1',
+              parentID: 8,
+              children:[]
             }
           ]
         }
       ]
+
     },
+    {
+      id: 4,
+      name: 'item4',
+      parentID: null,
+      children:[]
+    },
+    {
+      id: 5,
+      name: 'item5',
+      parentID: null,
+      children:[]
+    }
   ];
 
-  @Input() menuItem: any; 
 
-  handleItemClick(subItem: any): void {
-    if (subItem && subItem.action && typeof subItem.action === 'function') {
-      subItem.action();
+  list:any = [];
+  lenght: any = [];
+  children: any = [];
+
+  toggleChildren(id: number,i:any){
+    
+    if (this.menuItems[id-1].parentID === null && this.list.length > 1){
+      
+      const lenght = this.list.length
+      for (let i = 0; i < lenght ; i++){
+        this.list.pop(0);
+        this.lenght.pop(0);
+      }
+      
+    }  
+    this.list.push([this.menuItems]);
+    this.list.push([this.menuItems[id-1].children]); 
+    this.lenght.push(0);
+    this.children = this.list[1];
+    
+  }
+
+
+  Children(id: number , index: any , i: any){
+    console.log(this.list);
+    
+    const temp = this.list.length;
+
+    if (this.list[index+1][0][i].id == id) {
+        
+      for (let i = 0; i < temp - index -2; i++) {
+        this.children.pop(index+2);
+        this.list.pop(index+1);
+        
+        for (let j = 1; j < temp - index -1; j++) {
+          this.lenght.pop(index);
+          
+        }
+      }
+    }
+
+  const idChild = this.list[index+1][0][i].id;
+
+  if (id == idChild) {
+    this.list.push(this.list[index+1][0][i].children);
+    this.children.push(this.list[index+2]);
+
+    for (let j = 1; j < this.children.length; j++) {
+      this.lenght.push(j);
+          
     }
   }
+  // else if(id === this.list[index+1][0].id){
+  //   console.log("miaii inja?");
+    
+  //   this.list.push(this.list[index+1][0].children);
+  //   this.children.push(this.list[index+2]);
+        
+  //   for (let j = 1; j < this.children.length; j++) {
+  //     this.lenght.push(j);
+          
+  //   }
+  // }
+           
+  }
+
 }
+  

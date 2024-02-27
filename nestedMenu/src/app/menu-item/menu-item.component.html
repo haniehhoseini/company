@@ -1,19 +1,15 @@
-<button mat-button [matMenuTriggerFor]="menu">Open Menu</button>
-<mat-menu #menu="matMenu">
-  <ng-container *ngFor="let menuItem of menuItems">
-    <button mat-menu-item [matMenuTriggerFor]="submenu">{{ menuItem.label }}</button>
-    <mat-menu #submenu="matMenu">
-      <ng-container *ngFor="let subItem of menuItem.subItems">
-        <button mat-menu-item [matMenuTriggerFor]="subsubmenu">{{ subItem.label }}</button>
-        <mat-menu #subsubmenu="matMenu">
-          <ng-container *ngFor="let subsubmenu of subItem.subItems">
-            <button mat-menu-item [matMenuTriggerFor]="threesubmenu">{{ subsubmenu.label }}</button>
-            <mat-menu #threesubmenu="matMenu">
-              <ng-container *ngFor="let subsubsubmenu of subsubmenu.subItems"></ng-container>
-            </mat-menu>
-          </ng-container>
-        </mat-menu>
-      </ng-container>
-    </mat-menu>
-  </ng-container>
-</mat-menu>
+<div class="d-flex flex-row bd-highlight mb-3">
+  <div class="p-2 bd-highlight d-flex flex-column">
+    <div *ngFor="let menuItem of menuItems ;let i = index">
+      <button (click)="toggleChildren(menuItem.id , i)">{{ menuItem.name}}</button>
+    </div>
+  </div>
+  <div class="p-2 bd-highlight d-flex flex-row">
+    <div *ngFor="let item of lenght">
+        <div *ngFor="let childItem of children[item] ;let i = index">
+      <button (click)="Children(childItem.id , item , i)">{{ childItem.name }}</button>
+    </div>
+    </div>
+
+  </div>
+</div>
