@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ChildoneComponent } from '../childone/childone.component';
 import { Router, RouterModule } from '@angular/router';
@@ -14,38 +14,49 @@ import { CheckService } from '../check.service';
 })
 export class ParentComponent {
 
-  constructor(private router:Router , private checkService: CheckService){}
+  constructor(private router:Router , private checkService: CheckService , private cdr:ChangeDetectorRef){}
 
   buttonBack:boolean =  false;
-  formData: any;
-  code: any;
-
-  activeButton:boolean = false;
+  formData: any ={};
+  code: any = {};
+  MobileConfirm: any;
 
   ngOnInit() {
     this.checkService.code$.subscribe(data => {
       this.code = data;
+      this.cdr.detectChanges();
     });
     this.checkService.formData$.subscribe(data => {
       this.formData = data;
-      
+      this.cdr.detectChanges();
     });
+    this.checkService.MobileConfirm$.subscribe(data => {
+      this.MobileConfirm = data;
+      this.cdr.detectChanges();
+    });
+  
   }
+  
+  mobileError: boolean = false;
 
   continueClick(){
+    if(!this.MobileConfirm){
+      this.mobileError = true;
+    }
     
-    const allFieldsFilled = Object.values(this.formData).every(value => !!value);
-    if(allFieldsFilled){
+    if(this.formData.valid && this.MobileConfirm){
       this.router.navigateByUrl('/parent/childtwo');
-      this.buttonBack = true;    
+      this.buttonBack = true;  
+      this.mobileError = false;
     }
 
-    if(this.code.code){
+    if(this.code.valid){
       this.router.navigateByUrl('/parent/childthree');
       this.buttonBack = false;
     }
 
   }
+
   backClick(){
     this.router.navigateByUrl('/parent');
     this.buttonBack = false;

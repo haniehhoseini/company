@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AfterViewInit , Component } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CheckService } from '../check.service';
 
 @Component({
@@ -9,19 +9,24 @@ import { CheckService } from '../check.service';
   templateUrl: './childtwo.component.html',
   styleUrl: './childtwo.component.scss'
 })
-export class ChildtwoComponent {
+export class ChildtwoComponent implements AfterViewInit {
 
-  constructor(private formBuilder:FormBuilder , private checkService: CheckService){}
+  constructor(private formBuilder:FormBuilder , private checkService: CheckService){
+      this.form = this.formBuilder.group({
+        code:['' , Validators.required]
+      });
+  }
   form !: FormGroup;
 
   ngOnInit(): void{
-    this.form = this.formBuilder.group({
-      code:['']
-    });
+
     this.form.valueChanges.subscribe(value => {
-      this.checkService.codeConfirm(value);
+      this.checkService.codeConfirm(this.form);
     });
   }
-
+  ngAfterViewInit(): void {
+    this.checkService.updateFormData(this.form);
+    
+  }
 
 }

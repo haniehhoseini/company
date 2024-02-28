@@ -12,8 +12,11 @@
   <div class="card" style="width: 50rem; height: 20rem;">
     <router-outlet></router-outlet>
     <div class="d-flex justify-content-between">
-      <button type="button" class="btn btn-light btn-lg col-4 d-inline-block" *ngIf="buttonBack" (click)="backClick()" >Back</button>
-      <button type="button" class="btn btn-light btn-lg col-4 d-inline-block" (click)="continueClick()">Continue</button>
+      <button type="button" class="btn btn-light btn-lg col-4 d-inline-block" *ngIf="buttonBack" (click)="backClick()">Back</button>
+      <button type="button" class="btn btn-light btn-lg col-4 d-inline-block" (click)="continueClick()" [disabled]="(this.formData.invalid) || (this.formData.valid && this.code.invalid)">Continue</button>
+      <div *ngIf="mobileError">
+        <p class="error-message">شماره موبایل نامعتبر است.</p>
+      </div>
     </div>
   </div>
 </div>
