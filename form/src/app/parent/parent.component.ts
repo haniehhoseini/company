@@ -36,23 +36,35 @@ export class ParentComponent {
     });
   
   }
-  
+
   mobileError: boolean = false;
+  codeError: boolean = false;
+
+  RegTextColor: string = 'red';
+  CofTextColor: string = 'black';
+  SuTextColor: string = 'black';
 
   continueClick(){
     if(!this.MobileConfirm){
       this.mobileError = true;
     }
-    
+
     if(this.formData.valid && this.MobileConfirm){
       this.router.navigateByUrl('/parent/childtwo');
       this.buttonBack = true;  
       this.mobileError = false;
-    }
+      this.RegTextColor ='black';
+      this.CofTextColor = 'red';
+      this.SuTextColor = 'black';
 
+    }
+    
     if(this.code.valid){
       this.router.navigateByUrl('/parent/childthree');
       this.buttonBack = false;
+      this.RegTextColor ='black';
+      this.CofTextColor = 'black';
+      this.SuTextColor = 'red';
     }
 
   }
@@ -60,5 +72,8 @@ export class ParentComponent {
   backClick(){
     this.router.navigateByUrl('/parent');
     this.buttonBack = false;
+    this.RegTextColor ='red';
+    this.CofTextColor = 'black';
+    this.SuTextColor = 'black';
   }
 }

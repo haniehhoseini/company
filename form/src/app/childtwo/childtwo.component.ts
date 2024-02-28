@@ -9,7 +9,7 @@ import { CheckService } from '../check.service';
   templateUrl: './childtwo.component.html',
   styleUrl: './childtwo.component.scss'
 })
-export class ChildtwoComponent implements AfterViewInit {
+export class ChildtwoComponent {
 
   constructor(private formBuilder:FormBuilder , private checkService: CheckService){
       this.form = this.formBuilder.group({
@@ -21,12 +21,17 @@ export class ChildtwoComponent implements AfterViewInit {
   ngOnInit(): void{
 
     this.form.valueChanges.subscribe(value => {
-      this.checkService.codeConfirm(this.form);
+      this.checkCode(this.form.value.code);
     });
+
   }
-  ngAfterViewInit(): void {
-    this.checkService.updateFormData(this.form);
-    
+
+  checkCode(code : any): void {
+    if(code && code.toString().length === 4){
+      console.log("4 raghamie!");
+      
+      this.checkService.codeConfirm(this.form);
+    }
   }
 
 }
