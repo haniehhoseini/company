@@ -4,11 +4,13 @@ import { ChildoneComponent } from '../childone/childone.component';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CheckService } from '../check.service';
+import { ChildthreeComponent } from '../childthree/childthree.component';
+import { ChildtwoComponent } from '../childtwo/childtwo.component';
 
 @Component({
   selector: 'app-parent',
   standalone: true,
-  imports: [ FormsModule , ChildoneComponent, RouterModule , CommonModule],
+  imports: [ FormsModule , ChildoneComponent, RouterModule , CommonModule , ChildtwoComponent , ChildthreeComponent],
   templateUrl: './parent.component.html',
   styleUrl: './parent.component.scss'
 })
@@ -23,6 +25,9 @@ export class ParentComponent {
   formData: any ={};
   code: any = {};
   MobileConfirm: any;
+  childone: boolean = true;
+  childtwo: boolean = false;
+  childthree: boolean = false;
 
   ngOnInit() {
     this.checkService.code$.subscribe(data => {
@@ -53,29 +58,33 @@ export class ParentComponent {
     }
 
     if(this.formData.valid && this.MobileConfirm){
-      this.router.navigateByUrl('/parent/childtwo');
       this.buttonBack = true;  
       this.mobileError = false;
       this.RegTextColor ='black';
       this.CofTextColor = 'red';
       this.SuTextColor = 'black';
       this.iconR = true;
+      this.childone = false;
+      this.childtwo = true;
     }
     
     if(this.code.valid){
-      this.router.navigateByUrl('/parent/childthree');
       this.buttonBack = false;
       this.RegTextColor ='black';
       this.CofTextColor = 'black';
       this.SuTextColor = 'red';
       this.iconC = true;
       this.end = true;
+      this.childtwo = false;
+      this.childthree = true;
     }
 
   }
 
   backClick(){
-    
+    this.childone = true;
+    this.childtwo = false;
+    this.childthree = false;
     this.router.navigateByUrl('/parent');
     //this.childone.backButton();
     this.buttonBack = false;

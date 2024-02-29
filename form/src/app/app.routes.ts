@@ -9,20 +9,6 @@ export const routes: Routes = [
     { 
         path: 'parent', 
         component: ParentComponent,
-        children: [
-            { 
-                path: '', 
-                component: ChildoneComponent 
-            },
-            {
-                path: 'childtwo',
-                component: ChildtwoComponent
-            },
-            {
-                path: 'childthree',
-                component: ChildthreeComponent
-            } 
-      ],
     }
  
 ];
