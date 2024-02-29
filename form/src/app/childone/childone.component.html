@@ -5,8 +5,5 @@
     <input type="text" class="form-control form-control-sm mb-1" formControlName="LastName">
     <h6 class="mb-1 text-dark pe-1">Enter Your Mobile</h6>
     <input type="text" class="form-control form-control-sm" formControlName="Mobile">
-    <div *ngIf="!isValidMobile && form.get('Mobile')?.touched">
-        شماره موبایل نامعتبر است.
-    </div>
 </form>
 

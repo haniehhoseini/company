@@ -17,6 +17,9 @@ export class ParentComponent {
   constructor(private router:Router , private checkService: CheckService , private cdr:ChangeDetectorRef){}
 
   buttonBack:boolean =  false;
+  iconR :boolean = false;
+  iconC :boolean = false;
+  end :boolean = false;
   formData: any ={};
   code: any = {};
   MobileConfirm: any;
@@ -56,7 +59,7 @@ export class ParentComponent {
       this.RegTextColor ='black';
       this.CofTextColor = 'red';
       this.SuTextColor = 'black';
-
+      this.iconR = true;
     }
     
     if(this.code.valid){
@@ -65,12 +68,16 @@ export class ParentComponent {
       this.RegTextColor ='black';
       this.CofTextColor = 'black';
       this.SuTextColor = 'red';
+      this.iconC = true;
+      this.end = true;
     }
 
   }
 
   backClick(){
+    
     this.router.navigateByUrl('/parent');
+    //this.childone.backButton();
     this.buttonBack = false;
     this.RegTextColor ='red';
     this.CofTextColor = 'black';
